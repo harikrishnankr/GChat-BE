@@ -2,19 +2,13 @@ import mongoose, { Model, Document } from 'mongoose';
 import { IUser } from './users.interface';
 
 export const UserSchema = new mongoose.Schema({
-    firstName: {
+    name: {
         type: String,
         required: "Required"
-    },
-    lastName: {
-        type: String,
-        required: "Required"
-    },
-    username: {
-        type: String
     },
     email: {
-        type: String
+        type: String,
+        unique: true
     },
     userId: {
         type: String,
