@@ -23,15 +23,15 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.8",
     "typescript": "^4.1.2",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
+    "uuid": "^8.3.2",
     "@types/cors": "^2.8.9",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.14.10",
     "@types/uuid": "^8.3.0",
+    "ts-node": "^9.1.0"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.6",
-    "ts-node": "^9.1.0",
     "tslint": "^6.1.3"
   }
 }
