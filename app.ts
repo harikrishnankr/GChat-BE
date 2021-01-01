@@ -10,7 +10,7 @@ const router = express.Router();
 const server = http.createServer(app);
 const PORT = 8000;
 
-const whitelist = ['http://localhost:9000']
+const whitelist = ['http://localhost:9000', 'http://localhost:8000']
 const corsOptions: CorsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         if (whitelist.indexOf(origin as string) !== -1) {
