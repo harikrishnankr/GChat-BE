@@ -8,9 +8,9 @@ import cors, { CorsOptions } from 'cors';
 const app = express();
 const router = express.Router();
 const server = http.createServer(app);
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
-const whitelist = ['http://localhost:9000', 'http://localhost:8000']
+const whitelist = ['http://localhost:9000', 'https://harikrishnankr.github.io/GChat']
 const corsOptions: CorsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         if (whitelist.indexOf(origin as string) !== -1) {
