@@ -8,3 +8,4 @@ export const MONGO_CLUSTER_USERNAME = 'g_chat_global';
 export const MONGO_CLUSTER_PASSWORD = 'P1b2IpbqIgTr9lXm';
 export const MONGO_CLUSTER_HOST = 'cluster0.i2yur.mongodb.net';
 export const MONGO_CLUSTER_DB = 'GChat';
+export const WHITE_LIST = ['http://localhost:9000', 'https://harikrishnankr.github.io']

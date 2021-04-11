@@ -1,4 +1,4 @@
-import mongoose, { Model, Document } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { IUser } from './users.interface';
 
 export const UserSchema = new mongoose.Schema({
@@ -13,7 +13,13 @@ export const UserSchema = new mongoose.Schema({
     userId: {
         type: String,
         unique: true
+    },
+    onlineStatus: {
+        type: Number
     }
+}, {
+    timestamps: true, // Adds CreatedAt and UpdatedAt
+    collection: "users", // Collection name
 });
 
 export const UserModel: Model<IUser> = mongoose.model("User", UserSchema);

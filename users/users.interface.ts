@@ -4,6 +4,7 @@ export interface IUserCollection {
     name: string;
     email: string;
     userId: string;
+    onlineStatus: number;
 }
 
 export interface IAuth {
