@@ -4,15 +4,16 @@ import { initiate } from './initiate';
 import { recentConversation } from './recent-conversation';
 import { postMessage } from './post-message';
 import { markConversationReadByRoomId } from './mark-as-read';
+import { validateToken } from '../utils/token.helper';
 
 export const getRoomRoutes = (): Router => {
     const router: Router = express.Router();
 
     router
-    .get('/', recentConversation)
+    .post('/initiate', validateToken, initiate)
+    .get('/', validateToken, recentConversation)
+    .post('/:roomId/message', validateToken, postMessage)
     .get('/:roomId', recentRoom)
-    .post('/initiate', initiate)
-    .post('/:roomId/message', postMessage)
     .put('/:roomId/mark-read', markConversationReadByRoomId)
 
     return router;

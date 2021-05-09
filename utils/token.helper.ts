@@ -23,6 +23,7 @@ export const validateToken = (request: Request, response: Response, next: NextFu
                 ...request.body,
                 tokenResult
             };
+
             // We call next to pass execution to the subsequent middleware
             next();
         } catch (err) {

@@ -2,16 +2,24 @@ import mongoose, { Model } from 'mongoose';
 import { IMessage, IRoom } from './chat.interface';
 
 export const RoomSchema = new mongoose.Schema({
-    roomId: {
+    messageId: {
         type: String,
         unique: true
     },
-    name: {
+    from: {
         type: String,
         required: "Required"
     },
-    members: {
-        type: Array,
+    isGroup: {
+        type: Boolean,
+        required: "Required"
+    },
+    to: {
+        type: String,
+        required: "Required"
+    },
+    message: {
+        type: String,
         required: "Required"
     }
 }, {

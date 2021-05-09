@@ -21,6 +21,7 @@ export interface IGAuthResponse {
 export interface IAuthTokenPayload {
     name: string;
     email: string;
+    userId: string;
 }
 
 export interface IUser extends IUserCollection, Document {}

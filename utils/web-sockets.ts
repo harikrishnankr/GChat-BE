@@ -3,6 +3,7 @@ import { Socket } from 'socket.io';
 import http from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import { WHITE_LIST } from '../config';
+import { MESSAGE_TRIGGERS } from '../constants';
 
 export type UserId = string;
 
@@ -22,7 +23,7 @@ interface IMessage {
 class WebSockets {
     private io!: SocketIOServer;
 
-    createServer(server: http.Server) {
+    public createServer(server: http.Server) {
         const socketServer = new SocketIOServer({
             path: '/chat-server/',
             cors: {
@@ -34,15 +35,14 @@ class WebSockets {
         socketServer.on('connection', (client) => this.connection(client));
     }
 
-    connection(client: Socket) {
-        console.log(client)
+    public connection(client: Socket) {
         // event fired when the chat room is disconnected
-        client.on("disconnect", (userId: string) => {
+        client.on(MESSAGE_TRIGGERS.DISCONNECT, (userId: string) => {
             delete clientSockets[userId];
         });
 
         // add identity of user mapped to the socket id
-        client.on("identity", (userId: UserId) => {
+        client.on(MESSAGE_TRIGGERS.IDENTITY, (userId: UserId) => {
             if (!userId) {
                return;
             }
@@ -54,24 +54,33 @@ class WebSockets {
             }
         });
 
-        client.on("message", (messageBody: IMessage) => {
+        client.on(MESSAGE_TRIGGERS.SEND_MESSAGE, (messageBody: IMessage) => {
             if (!messageBody.from || !messageBody.to) {
                 return;
             }
 
             const { to } = messageBody;
-            if (Array.isArray(to)) {
-                try {
-                    to.forEach((id: string) => {
-                        if (clientSockets[id]) {
-                            clientSockets[id].forEach((socket: Socket) => socket.emit('message', messageBody));
-                        }
-                    });
-                } catch {
-                    return;
-                }
-            }
+            this.sendTo(to, (socket: Socket) => socket.emit(MESSAGE_TRIGGERS.SEND_MESSAGE, messageBody));
         });
+    }
+
+
+    private sendTo(sendTo: string[], callback: (socket: Socket) => void) {
+        if (Array.isArray(sendTo)) {
+            try {
+                sendTo.forEach((id: string) => {
+                    if (clientSockets[id]) {
+                        clientSockets[id].forEach((socket: Socket) => callback(socket));
+                    }
+                });
+            } catch {
+                return;
+            }
+        }
+    }
+
+    public emit(triggerName: string, sendTo: string[], data?: any) {
+        this.sendTo(sendTo, (socket: Socket) => socket.emit(triggerName, data));
     }
 }
 

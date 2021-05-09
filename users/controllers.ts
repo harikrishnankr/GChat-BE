@@ -30,7 +30,7 @@ export const authenticateUser = async (request: Request, response: Response) => 
             if (!error) {
                 if (document) {
                     const { email, name, userId } = document;
-                    const token = getAuthToken({ email, name });
+                    const token = getAuthToken({ email, name, userId });
                     response.json({ email, name, token, userId });
                     response.status(200);
                     response.end();
@@ -42,7 +42,7 @@ export const authenticateUser = async (request: Request, response: Response) => 
                     user.save((userError: CallbackError, userDocument: IUser) => {
                         if (!userError) {
                             const { email, name, userId } = userDocument;
-                            const token = getAuthToken({ email, name });
+                            const token = getAuthToken({ email, name, userId });
                             response.json({ email, name, token, userId });
                             response.status(200);
                         } else {

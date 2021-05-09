@@ -3,14 +3,17 @@ import { Document } from 'mongoose';
 interface IRoomCollection {
     roomId: string;
     name: string;
-    members: number[];
+    members: string[];
+    isGroup: boolean;
+    creator: string;
 }
 
 interface IMessageCollection {
-    fromId: string;
-    toId: string;
+    from: string;
+    to: string;
     message: string;
-    roomId: string;
+    isGroup: boolean;
+    messageId: string;
 }
 
 export interface IRoom extends IRoomCollection, Document {};
